@@ -8,7 +8,7 @@ default: &default
   database: <%= ENV['DATABASE_NAME'] %>
   username: <%= ENV['DATABASE_USER'] %>
   password: <%= ENV['DATABASE_PASSWORD'] %>
-  
+
 development:
   <<: *default
 
@@ -16,4 +16,11 @@ test:
   <<: *default
 
 production:
-  <<: *default
+  primary:
+    <<: *default
+  cache:
+    <<: *default
+  queue:
+    <<: *default
+  cable:
+    <<: *default
