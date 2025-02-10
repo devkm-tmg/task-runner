@@ -32,9 +32,6 @@ export default function LoginPage() {
           }
           return response.json();
         })
-        .then((data) => {
-          setUsername(data.name); // ユーザー名をstateにセット
-        })
         .catch((error) => {
           console.error("Error fetching user data:", error);
           localStorage.removeItem('token'); // トークンを削除
