@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  main_task: one
+  sub_task: one
+
+two:
+  main_task: two
+  sub_task: two
