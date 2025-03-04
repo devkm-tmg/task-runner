@@ -1,14 +1,27 @@
-"use client";
+'use client';
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 
+// タスクとサブタスクの型を定義
+interface Task {
+  id: number;
+  name: string;
+  completed: boolean;
+}
+
+interface SubTask {
+  id: number;
+  name: string;
+  completed: boolean;
+  task_id: number; // メインタスクとの関連を示す
+}
+
 export default function TaskPage() {
-  const [task, setTask] = useState<any>(null);
-  const [subTasks, setSubTasks] = useState<any[]>([]); // サブタスク用の状態を追加
-  const [id, setId] = useState<string | undefined>(undefined);
+  const [task, setTask] = useState<Task | null>(null); // Task 型を使用
+  const [subTasks, setSubTasks] = useState<SubTask[]>([]); // SubTask 型を使用
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // モーダル開閉用の状態
-  const [selectedSubTask, setSelectedSubTask] = useState<any>(null); // クリックされたサブタスク
+  const [selectedSubTask, setSelectedSubTask] = useState<SubTask | null>(null); // クリックされたサブタスク
   const [newSubTaskName, setNewSubTaskName] = useState<string>(""); // 新しいサブタスク名
 
   const params = useParams();
@@ -26,7 +39,7 @@ export default function TaskPage() {
         }
         return response.json();
       })
-      .then((data) => {
+      .then((data: Task) => { // Task 型を明示的に指定
         setTask(data);
       })
       .catch((error) => {
@@ -48,7 +61,7 @@ export default function TaskPage() {
           }
           return response.json();
         })
-        .then((data) => {
+        .then((data: SubTask[]) => { // SubTask 型を明示的に指定
           setSubTasks(data); // サブタスクデータをセット
         })
         .catch((error) => {
@@ -80,7 +93,7 @@ export default function TaskPage() {
   const outerCircleTasks = subTaskArr.slice(10); // 11個目以降を外側
 
   // モーダルを開く関数
-  const openModal = (subTask: any) => {
+  const openModal = (subTask: SubTask | null) => { // SubTask 型を使用
     setSelectedSubTask(subTask); // クリックされたサブタスクをセット
     setNewSubTaskName(subTask ? subTask.name : ""); // サブタスク名をセット
     setIsModalOpen(true);
